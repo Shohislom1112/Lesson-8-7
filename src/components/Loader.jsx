@@ -3,7 +3,7 @@ import { ClipLoader } from 'react-spinners';
 const override = {
   display: 'block',
   margin: '150px auto',
-  borderColor: 'red',
+  borderColor: 'blue',
 };
 
 const Loader = () => {
@@ -11,8 +11,8 @@ const Loader = () => {
     <ClipLoader
       color={'white'}
       loading={true}
+      size={170}
       cssOverride={override}
-      size={150}
     />
   );
 };

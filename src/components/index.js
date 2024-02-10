@@ -1,5 +1,3 @@
-import Actions from './Actions';
-import Loader from './Loader';
-import AddStudent from './AddStudent';
+import Loader from "./Loader";
 
-export { Actions, Loader, AddStudent };
+export { Loader };

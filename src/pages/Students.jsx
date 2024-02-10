@@ -39,51 +39,6 @@ const Students = () => {
     }
   };
 
-  const addStudent = async (student) => {
-    setLoading(true);
-    try {
-      const { firstName, lastName, age, avatar } = student;
-      const formData = new FormData();
-      formData.append("firstName", firstName);
-      formData.append("lastName", lastName);
-      formData.append("age", age);
-      formData.append("avatar", avatar);
-
-      await axios.post(
-        "https://65bb677f52189914b5bc02b7.mockapi.io/students",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      fetchStudents();
-    } catch (error) {
-      setError(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleDelete = async (type, id) => {
-    if (window.confirm(`Are you sure you want to delete this student?`)) {
-      try {
-        await axios.delete(
-          `https://65bb677f52189914b5bc02b7.mockapi.io/${type}/${id}`
-        );
-        setStudents(students.filter((student) => student.id !== id));
-        console.log(`${type} with ID ${id} deleted successfully.`);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  };
-
-  const handleEdit = (student) => {
-    setSelectedStudent(student);
-    setOpenEdit(true);
-  };
 
   useEffect(() => {
     fetchStudents();
@@ -91,22 +46,6 @@ const Students = () => {
 
   return (
     <div>
-      {openAdd && (
-        <AddStudent
-          openAdd={openAdd}
-          setOpenAdd={setOpenAdd}
-          addStudent={addStudent}
-          fetchStudents={fetchStudents}
-        />
-      )}
-      {openEdit && (
-        <EditStudent
-          openEdit={openEdit}
-          setOpenEdit={setOpenEdit}
-          selectedStudent={selectedStudent}
-          fetchStudents={fetchStudents}
-        />
-      )}
       <Stack
         direction="row"
         sx={{
@@ -116,9 +55,6 @@ const Students = () => {
         }}
       >
         <Typography variant="h4">Students</Typography>
-        <Button variant="contained" onClick={() => setOpenAdd(true)}>
-          Add
-        </Button>
       </Stack>
 
       {loading ? <Loader /> : null}
@@ -133,11 +69,10 @@ const Students = () => {
       ) : null}
       {students.length > 0 ? (
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <Table sx={{ minWidth: 600 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>No</TableCell>
-                <TableCell>Avatar</TableCell>
+                <TableCell>№</TableCell>
                 <TableCell>Firstname</TableCell>
                 <TableCell>Lastname</TableCell>
                 <TableCell>Age</TableCell>
@@ -148,7 +83,7 @@ const Students = () => {
               {students.map((student) => (
                 <TableRow
                   key={student.id}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  
                 >
                   <TableCell component="th" scope="row">
                     {student.id}

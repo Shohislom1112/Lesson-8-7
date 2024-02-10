@@ -1,1 +1,1 @@
-// export const take_Teacher = "takeTeacher";
+export const take_Teacher = "takeTeacher";

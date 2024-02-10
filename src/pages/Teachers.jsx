@@ -39,56 +39,6 @@ const Teachers = () => {
     }
   };
 
-  const addStudent = async () => {
-    setLoading(true);
-    try {
-      const { firstName, lastName, age, group, teacher, avatar } = student;
-      const formData = new FormData();
-      formData.append("firstName", firstName);
-      formData.append("lastName", lastName);
-      formData.append("age", age);
-      formData.append("teacher", teacher);
-      formData.append("avatar", avatar);
-
-      await axios.post(
-        "https://65bb677f52189914b5bc02b7.mockapi.io/teachers",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-    } catch (error) {
-      setError(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleDelete = async (type, id) => {
-    if (window.confirm(`Are you sure you want to delete this teacher ?`))
-      try {
-        const response = await fetch(
-          `https://65bb677f52189914b5bc02b7.mockapi.io/${type}/${id}`,
-          {
-            method: "Delete",
-          }
-        );
-        if (!response.ok) {
-          throw new Error(`Failed to delete ${type} with ID ${id}`);
-        }
-        setTeachers(teachers.filter((teacher) => teacher.id !== id));
-        console.log(`${type} with ID ${id} deleted succesfully.`);
-      } catch (error) {
-        console.log(error);
-      }
-  };
-
-  const handleEdit = (teacher) => {
-    setSelectedTeacher(teacher);
-    setOpenEdit(true);
-  };
 
   useEffect(() => {
     fetchTeachers();
@@ -96,22 +46,6 @@ const Teachers = () => {
 
   return (
     <div>
-      {openAdd && (
-        <AddStudent
-          openAdd={openAdd}
-          setOpenAdd={setOpenAdd}
-          addStudent={addStudent}
-          fetchTeachers={fetchTeachers}
-        />
-      )}
-      {openEdit && (
-        <EditTeacher
-          openEdit={openEdit}
-          setOpenEdit={setOpenEdit}
-          selectedTeacher={selectedTeacher}
-          fetchTeachers={fetchTeachers}
-        />
-      )}
       <Stack
         direction="row"
         sx={{
@@ -121,9 +55,6 @@ const Teachers = () => {
         }}
       >
         <Typography variant="h4">Teachers</Typography>
-        <Button variant="contained" onClick={() => setOpenAdd(true)}>
-          Add
-        </Button>
       </Stack>
 
       {loading ? <Loader /> : null}
