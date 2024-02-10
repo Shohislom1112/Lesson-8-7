@@ -1,6 +1,6 @@
 // import TeachersRedux from "./components/TeachersRedux";
 import { Dashboard } from "./layout";
-import "./styles/style.scss";
+import "./App.scss";
 
 const App = () => {
   return (
